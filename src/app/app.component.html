@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="filter-container">
+    <div class="filter-row">
+      <input [(ngModel)]="filters.regiao" placeholder="Região" />
+      <input [(ngModel)]="filters.especie" placeholder="Espécie" />
+      <input [(ngModel)]="filters['statusConservacao']" placeholder="Status de Conservação" />
+    </div>
+    <div class="filter-row">
+      <input [(ngModel)]="filters['temperaturaAgua']" placeholder="Temperatura da Água" />
+      <input [(ngModel)]="filters['pH']" placeholder="pH" />
+      <input [(ngModel)]="filters['nivelPoluicao']" placeholder="Nível de Poluição" />
+    </div>
+    <button (click)="applyFilters()">Aplicar Filtros</button>
+  </div>
+
+  <div class="data-table" *ngIf="data.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Região</th>
+          <th>Temperatura da Água</th>
+          <th>pH</th>
+          <th>Nível de Poluição</th>
+          <th>Espécies</th>
+          <th>Projetos de Conservação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td>{{ item.regiao }}</td>
+          <td>{{ item.temperaturaAgua }}</td>
+          <td>{{ item.pH }}</td>
+          <td>{{ item.nivelPoluicao }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let especie of item.especies">
+                {{ especie.nome }} - {{ especie.status }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let projeto of item.projetosConservacao">
+                {{ projeto.nomeProjeto }} ({{ projeto.tipoProjeto }} - {{ projeto.tipoParticipacao }})
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="filters.pagina === 1">Página Anterior</button>
+    <span>Página {{filters.pagina}}</span>
+    <button (click)="nextPage()">Próxima Página</button>
+  </div>
+</div>
